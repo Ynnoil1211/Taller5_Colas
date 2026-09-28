@@ -2,7 +2,7 @@ package co.mqtt.queue;
 
 public class ServidorMQTT {
     Cola cola;
-    ServidorMQTT(){
+    public ServidorMQTT(){
         cola = new Cola();
     }
     public void publicar(String ref, String payload, String timestamp){
@@ -12,8 +12,12 @@ public class ServidorMQTT {
 
     public void procesar(){
         MensajeMQTT primerMensaje = cola.decolar();
+        if(primerMensaje == null) {
+            System.out.println("No quedan mensajes en la cola");
+            return;
+        }
         System.out.println("Mensaje Procesado: ");
         primerMensaje.mostrarMensaje();
-        System.out.println("Mensaje(s) Restante(s): " + cola.getSize());
+        System.out.println("Mensaje(s) Restante(s): " + cola.size);
     }
 }

@@ -24,6 +24,7 @@ public class Dispositivos {
         MensajeMQTT nuevo = new MensajeMQTT(
             refe[0],
             refe[1],
+            refe[2],
             payload,
             timestamp
         );

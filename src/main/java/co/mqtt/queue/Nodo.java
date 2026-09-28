@@ -16,11 +16,6 @@ public class Nodo {
         return nuevo;
     }
 
-    Nodo(MensajeMQTT dato, Nodo sig) {
-        this.dato = dato;
-        this.sig = sig;
-    }
-
     MensajeMQTT getDato() {
         return this.dato;
     }

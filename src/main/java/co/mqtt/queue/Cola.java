@@ -1,7 +1,4 @@
 package co.mqtt.queue;
-
-import java.security.MessageDigest;
-
 public class Cola {
 
     Nodo primerNodo;
@@ -9,7 +6,7 @@ public class Cola {
     int size;
     private int ids;
 
-    Cola() {
+    public Cola() {
         limpiar();
     }
 
@@ -26,9 +23,9 @@ public class Cola {
 
     boolean encolar(String ref, String payload, String timestamp) {
         MensajeMQTT mensaje = Dispositivos.crear(ref, payload, timestamp);
+        if (mensaje == null) return false;
+        mensaje.id = ids++;
         Nodo nuevo = Nodo.crearNodo(mensaje);
-        if (nuevo == null) return false;
-        nuevo.getDato().setId(ids++);
         if (primerNodo == null) {
             primerNodo = nuevo;
             ultimoNodo = nuevo;
@@ -48,9 +45,5 @@ public class Cola {
         this.primerNodo = this.primerNodo.sig;
         size--;
         return nodoMensaje.getDato();
-    }
-
-    int getSize() {
-        return size;
     }
 }
