@@ -1,7 +1,7 @@
 package co.mqtt.queue;
 
 public class MensajeMQTT {
-
+    int id;
     String dispositivoId;
     String topic;
     String payload;
@@ -13,19 +13,15 @@ public class MensajeMQTT {
         this.timestamp = timestamp;
     }
 
-    public String getDispositivoId() {
-        return dispositivoId;
+    void mostrarMensaje() {
+        System.out.println("ID: " + this.id);
+        System.out.println("Dispositivo: " + this.dispositivoId);
+        System.out.println("Topic: " + this.topic);
+        System.out.println("Payload: " + this.payload);
+        System.out.println("Timestamp: " + this.timestamp);
     }
 
-    public String getTopic() {
-        return topic;
-    }
-
-    public String getPayload() {
-        return payload;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
+    public void setId(int id) {
+        this.id = id;
     }
 }

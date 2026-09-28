@@ -1,5 +1,7 @@
 package co.mqtt.queue;
 
+import java.security.MessageDigest;
+
 public class Cola {
 
     Nodo primerNodo;
@@ -7,26 +9,26 @@ public class Cola {
     int size;
     private int ids;
 
-    public Cola() {
+    Cola() {
         limpiar();
     }
 
-    public void limpiar() {
+    void limpiar() {
         primerNodo = null;
         ultimoNodo = null;
         size = 0;
         ids = 1;
     }
 
-    public boolean estaVacio() {
+    boolean estaVacio() {
         return size == 0;
     }
 
-    public void encolar(String ref, String payload, String timestamp) {
+    boolean encolar(String ref, String payload, String timestamp) {
         MensajeMQTT mensaje = Dispositivos.crear(ref, payload, timestamp);
         Nodo nuevo = Nodo.crearNodo(mensaje);
-        if (nuevo == null) return;
-        nuevo.id = ids++;
+        if (nuevo == null) return false;
+        nuevo.getDato().setId(ids++);
         if (primerNodo == null) {
             primerNodo = nuevo;
             ultimoNodo = nuevo;
@@ -35,17 +37,20 @@ public class Cola {
         }
         ultimoNodo = nuevo;
         size++;
+        return true;
     }
 
-    public void decolar() {
+    MensajeMQTT decolar() {
         if(this.estaVacio()) {
-            System.out.println("El Servidor esta vacio. ");
-            return;
+            return null;
         };
-        Nodo mensaje = this.primerNodo;
-        mensaje.mostrarNodoMensaje();
-        this.primerNodo = primerNodo.sig;
+        Nodo nodoMensaje = this.primerNodo;
+        this.primerNodo = this.primerNodo.sig;
         size--;
-        System.out.println("Mensaje(s) Restante(s): " + this.size);
+        return nodoMensaje.getDato();
+    }
+
+    int getSize() {
+        return size;
     }
 }
