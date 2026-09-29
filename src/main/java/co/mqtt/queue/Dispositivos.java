@@ -1,5 +1,6 @@
 package co.mqtt.queue;
-
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 public class Dispositivos {
 
     private static final String[][] dispositivos = {
@@ -18,15 +19,16 @@ public class Dispositivos {
         return null;
     }
 
-    static MensajeMQTT crear(String ref, String payload, String timestamp) {
+    static MensajeMQTT crear(String ref, String payload) {
         String[] refe = buscar(ref);
         if (refe == null) return null;
         MensajeMQTT nuevo = new MensajeMQTT(
+            ServidorMQTT.getIds(),
             refe[0],
             refe[1],
             refe[2],
             payload,
-            timestamp
+            LocalDateTime.now()
         );
         return nuevo;
     }
