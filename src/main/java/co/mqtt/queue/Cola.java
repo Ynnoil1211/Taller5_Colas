@@ -4,8 +4,6 @@ public class Cola {
     Nodo primerNodo;
     Nodo ultimoNodo;
     int size;
-    private int ids;
-
     public Cola() {
         limpiar();
     }
@@ -14,21 +12,16 @@ public class Cola {
         primerNodo = null;
         ultimoNodo = null;
         size = 0;
-        ids = 1;
     }
 
     boolean estaVacio() {
         return size == 0;
     }
 
-    boolean encolar(String ref, String payload, String timestamp) {
-        MensajeMQTT mensaje = Dispositivos.crear(ref, payload, timestamp);
-        if (mensaje == null) return false;
-        mensaje.id = ids++;
+    boolean encolar(MensajeMQTT mensaje) {
         Nodo nuevo = Nodo.crearNodo(mensaje);
         if (primerNodo == null) {
             primerNodo = nuevo;
-            ultimoNodo = nuevo;
         } else {
             ultimoNodo.sig = nuevo;
         }
@@ -42,8 +35,21 @@ public class Cola {
             return null;
         };
         Nodo nodoMensaje = this.primerNodo;
+        if(this.primerNodo == this.ultimoNodo) this.ultimoNodo = null;
         this.primerNodo = this.primerNodo.sig;
         size--;
         return nodoMensaje.getDato();
+    }
+
+    void mostrarEstadoCola(){
+        System.out.println("Contenido Cola: ");
+        Nodo curr = this.primerNodo;
+        while(curr!=null) {
+            System.out.print("Id: " + curr.getDato().getId());
+            if(curr!=ultimoNodo) System.out.print(" -> ");
+            curr = curr.sig;
+        }
+        if(this.estaVacio()) System.out.print("Cola Vacia. ");
+        System.out.println();
     }
 }
