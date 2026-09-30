@@ -1,13 +1,12 @@
 package co.mqtt.queue;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 public class Dispositivos {
 
     private static final String[][] dispositivos = {
         // Sensor - Topic - Medicion
-        { "S01", "iot/sensor01/temperatura", "Temperatura" },
-        { "S02", "iot/sensor02/humedad", "Humedad" },
-        { "S03", "iot/sensor03/nivel", "Nivel de agua" },
+        { "S01", "iot/sensor01/temperatura"},
+        { "S02", "iot/sensor02/humedad"},
+        { "S03", "iot/sensor03/nivel"},
     };
 
     private static String[] buscar(String ref) {
@@ -26,7 +25,6 @@ public class Dispositivos {
             ServidorMQTT.getIds(),
             refe[0],
             refe[1],
-            refe[2],
             payload,
             LocalDateTime.now()
         );

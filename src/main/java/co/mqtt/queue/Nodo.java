@@ -1,23 +1,16 @@
 package co.mqtt.queue;
-
-public class Nodo {
-
-    MensajeMQTT dato;
-    Nodo sig;
-
-    private Nodo(MensajeMQTT dato) {
-        this.dato = dato;
-        this.sig = null;
-    }
-
-    static Nodo crearNodo(MensajeMQTT dato){
-        if(dato == null) return null;
-        Nodo nuevo = new Nodo(dato);
-        return nuevo;
-    }
-
-    MensajeMQTT getDato() {
-        return this.dato;
-    }
-
+public class Nodo<T> {
+	T dato;
+	Nodo<T> sig;
+	public Nodo(T dato){
+		this.dato=dato;
+		this.sig=null;
+	}
+	public Nodo(T dato, Nodo<T> sig){
+		this.dato=dato;
+		this.sig=sig;
+	}
+	public T getDato(){
+		return this.dato;
+	}
 }

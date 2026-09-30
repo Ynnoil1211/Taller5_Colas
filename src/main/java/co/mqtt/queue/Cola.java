@@ -1,55 +1,49 @@
 package co.mqtt.queue;
-public class Cola {
 
-    Nodo primerNodo;
-    Nodo ultimoNodo;
-    int size;
+public class Cola<T> {
+
+    Nodo<T> primerNodo;
+    Nodo<T> ultimoNodo;
+    int size = 0;
+
     public Cola() {
         limpiar();
     }
 
-    void limpiar() {
+    private void limpiar() {
         primerNodo = null;
         ultimoNodo = null;
         size = 0;
     }
 
-    boolean estaVacio() {
+    public boolean estaVacia() {
         return size == 0;
     }
 
-    boolean encolar(MensajeMQTT mensaje) {
-        Nodo nuevo = Nodo.crearNodo(mensaje);
-        if (primerNodo == null) {
-            primerNodo = nuevo;
-        } else {
-            ultimoNodo.sig = nuevo;
-        }
-        ultimoNodo = nuevo;
-        size++;
-        return true;
-    }
-
-    MensajeMQTT decolar() {
-        if(this.estaVacio()) {
+    public T decolar() {
+        if (estaVacia()) {
+            System.out.println("La Cola esta vacia");
             return null;
-        };
-        Nodo nodoMensaje = this.primerNodo;
-        if(this.primerNodo == this.ultimoNodo) this.ultimoNodo = null;
-        this.primerNodo = this.primerNodo.sig;
+        }
+        T aux = primerNodo.getDato();
+        primerNodo = primerNodo.sig;
         size--;
-        return nodoMensaje.getDato();
+        if (primerNodo == null) {
+            ultimoNodo = null;
+        }
+        return aux;
     }
 
-    void mostrarEstadoCola(){
-        System.out.println("Contenido Cola: ");
-        Nodo curr = this.primerNodo;
-        while(curr!=null) {
-            System.out.print("Id: " + curr.getDato().getId());
-            if(curr!=ultimoNodo) System.out.print(" -> ");
-            curr = curr.sig;
+    public boolean encolar(Nodo<T> Nodo) {
+        Nodo<T> nuevoNodo = Nodo;
+        if (estaVacia()) {
+            primerNodo = nuevoNodo;
+            ultimoNodo = nuevoNodo;
+        } else {
+            ultimoNodo.sig = Nodo;
+            ultimoNodo = Nodo;
         }
-        if(this.estaVacio()) System.out.print("Cola Vacia. ");
-        System.out.println();
+        size = size + 1;
+        return true;
     }
 }

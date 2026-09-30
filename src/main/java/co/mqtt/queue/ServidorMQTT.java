@@ -1,19 +1,32 @@
 package co.mqtt.queue;
 
 public class ServidorMQTT {
-    Cola cola;
+    Cola<MensajeMQTT> cola;
     private static int ids = 0;
     public ServidorMQTT(){
-        cola = new Cola();
+        cola = new Cola<MensajeMQTT>();
     }
     public void publicar(String ref, String payload){
         MensajeMQTT mensaje = Dispositivos.crear(ref, payload);
-        if(mensaje != null){
-            cola.encolar(mensaje);
-            System.out.println("Mensaje enviado con Id: " + mensaje.getId());
-            cola.mostrarEstadoCola();
+        Nodo<MensajeMQTT> nuevo = mensaje != null ? new Nodo<MensajeMQTT>(mensaje) : null;
+        if(nuevo != null){
+            cola.encolar(nuevo);
+            System.out.println("Mensaje enviado con Id: " + nuevo.getDato().getId());
+            mostrarEstadoCola();
         }
          else  System.out.println("Referencia no encontrada. ");
+    }
+
+    public void mostrarEstadoCola() {
+        Nodo<MensajeMQTT> curr = cola.primerNodo;
+        System.out.println("Contenido Cola: ");
+        if(cola.estaVacia()) System.out.print("Cola Vacia. ");
+        while(curr!=null) {
+            System.out.print("Id: " + curr.getDato().getId());
+            if(curr!=cola.ultimoNodo) System.out.print(" -> ");
+            curr = curr.sig;
+        }
+        System.out.println();
     }
 
     public void procesar(){
@@ -24,7 +37,7 @@ public class ServidorMQTT {
         }
         System.out.println("Mensaje Procesado: ");
         primerMensaje.mostrarMensaje();
-        cola.mostrarEstadoCola();
+        mostrarEstadoCola();
         System.out.println("Mensaje(s) Restante(s): " + cola.size);
     }
 
