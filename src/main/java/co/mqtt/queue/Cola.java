@@ -27,9 +27,7 @@ public class Cola<T> {
         T aux = primerNodo.getDato();
         primerNodo = primerNodo.sig;
         size--;
-        if (primerNodo == null) {
-            ultimoNodo = null;
-        }
+        if (primerNodo == null) ultimoNodo = null;
         return aux;
     }
 
@@ -42,7 +40,7 @@ public class Cola<T> {
             ultimoNodo.sig = Nodo;
             ultimoNodo = Nodo;
         }
-        size = size + 1;
+        size++;
         return true;
     }
 }
