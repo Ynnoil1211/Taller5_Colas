@@ -24,12 +24,15 @@ public class ServidorMQTT {
 
     public void mostrarEstadoCola() {
         Nodo<MensajeMQTT> curr = cola.primerNodo;
-        System.out.println("Contenido Cola: ");
+        System.out.println("Estado Actual de la Cola: ");
         if (cola.estaVacia()) System.out.print("Cola Vacia. ");
-        while (curr != null) {
-            System.out.print("Id: " + curr.getDato().getId());
-            if (curr != cola.ultimoNodo) System.out.print(" -> ");
-            curr = curr.sig;
+        else{
+            System.out.print("ID: ");
+            while (curr != null) {
+                System.out.print(curr.getDato().getId());
+                if (curr != cola.ultimoNodo) System.out.print(" -> ");
+                curr = curr.sig;
+            }
         }
         System.out.println();
     }
