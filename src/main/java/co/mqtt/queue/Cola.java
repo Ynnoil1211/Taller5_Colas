@@ -22,7 +22,6 @@ public class Cola<T> {
 
     public T decolar() {
         if (estaVacia()) {
-            System.out.println("La Cola esta vacia");
             return null;
         }
         T aux = primerNodo.getDato();
