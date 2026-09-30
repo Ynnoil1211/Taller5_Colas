@@ -1,7 +1,14 @@
 package co.mqtt.queue;
 
 import java.time.LocalDateTime;
+/*
+Elaborado por:
+DANIEL ESTEBAN BORRE CARO - 0222510016
+LIONNY LIN LI - 0222510050
+MARIA ALEJANDRA RAMOS NAIZIR - 0222510006
 
+--Repo en Github del taller https://github.com/danicpr/Taller5_Colas
+ */
 public class Dispositivos {
 
     private static final String[][] dispositivos = {
