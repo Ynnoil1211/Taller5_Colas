@@ -33,7 +33,7 @@ public class MensajeMQTT {
     }
 
     void mostrarMensaje() {
-        System.out.println("ID: " + this.id);
+        System.out.println("ID Mensaje: " + this.id);
         System.out.println("Dispositivo: " + this.dispositivoId);
         System.out.println("Topic: " + this.topic);
         System.out.println("Payload: " + this.payload);
@@ -47,5 +47,9 @@ public class MensajeMQTT {
 
     public int getId() {
         return id;
+    }
+
+    public String getDispositivoId() {
+        return dispositivoId;
     }
 }
